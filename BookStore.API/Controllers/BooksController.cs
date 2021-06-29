@@ -52,7 +52,7 @@ namespace BookStore.API.Controllers
         public async Task<ActionResult<BookResultDto>> GetBooksByCategory(int categoryId)
         {
             var books = await _bookService.GetBooksByCategory(categoryId);
-            if (!books.Any()) 
+            if (!books.Any())
                 return NotFound();
 
             var booksResultDto = _mapper.Map<IEnumerable<BookResultDto>>(books);
@@ -64,12 +64,12 @@ namespace BookStore.API.Controllers
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         public async Task<ActionResult<BookResultDto>> Add(BookAddDto bookDto)
         {
-            if (!ModelState.IsValid) 
+            if (!ModelState.IsValid)
                 return BadRequest();
 
             var book = _mapper.Map<Book>(bookDto);
             var bookResult = await _bookService.Add(book);
-            if (bookResult == null) 
+            if (bookResult == null)
                 return BadRequest();
 
             var bookResultDto = _mapper.Map<BookResultDto>(bookResult);
@@ -81,10 +81,10 @@ namespace BookStore.API.Controllers
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         public async Task<ActionResult<BookEditDto>> Update(int id, BookEditDto bookDto)
         {
-            if (id != bookDto.Id) 
+            if (id != bookDto.Id)
                 return BadRequest();
 
-            if (!ModelState.IsValid) 
+            if (!ModelState.IsValid)
                 return BadRequest();
 
             var book = _mapper.Map<Book>(bookDto);
@@ -99,7 +99,7 @@ namespace BookStore.API.Controllers
         public async Task<IActionResult> Remove(int id)
         {
             var book = await _bookService.GetById(id);
-            if (book == null) 
+            if (book == null)
                 return NotFound();
 
             await _bookService.Remove(book);
@@ -128,7 +128,7 @@ namespace BookStore.API.Controllers
         public async Task<ActionResult<List<BookResultDto>>> SearchBookWithCategory(string searchedValue)
         {
             var books = await _bookService.SearchBookWithCategory(searchedValue);
-            if (books == null || !books.Any()) 
+            if (books == null || !books.Any())
                 return NotFound("None book was founded");
 
             var booksResultDto = _mapper.Map<List<Book>>(books);

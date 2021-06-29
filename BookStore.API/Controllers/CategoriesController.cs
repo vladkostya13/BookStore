@@ -86,11 +86,11 @@ namespace BookStore.API.Controllers
         public async Task<IActionResult> Remove(int id)
         {
             var category = await _categoryService.GetById(id);
-            if (category == null) 
+            if (category == null)
                 return NotFound();
 
             var result = await _categoryService.Remove(category);
-            if (!result) 
+            if (!result)
                 return BadRequest();
 
             return Ok();
