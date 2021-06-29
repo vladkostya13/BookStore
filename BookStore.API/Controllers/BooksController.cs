@@ -26,7 +26,7 @@ namespace BookStore.API.Controllers
         [ProducesResponseType((int)HttpStatusCode.OK)]
         public async Task<ActionResult<List<BookResultDto>>> GetAll()
         {
-            var books = await _bookService.GetAll();
+            var books = await _bookService.GetAllAsync();
             var booksResultDto = _mapper.Map<IEnumerable<BookResultDto>>(books);
 
             return Ok(booksResultDto);
@@ -37,7 +37,7 @@ namespace BookStore.API.Controllers
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public async Task<ActionResult<BookResultDto>> GetById(int id)
         {
-            var book = await _bookService.GetById(id);
+            var book = await _bookService.GetByIdAsync(id);
             if (book == null)
                 return NotFound();
 
@@ -51,7 +51,7 @@ namespace BookStore.API.Controllers
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public async Task<ActionResult<BookResultDto>> GetBooksByCategory(int categoryId)
         {
-            var books = await _bookService.GetBooksByCategory(categoryId);
+            var books = await _bookService.GetBooksByCategoryAsync(categoryId);
             if (!books.Any())
                 return NotFound();
 
@@ -68,7 +68,7 @@ namespace BookStore.API.Controllers
                 return BadRequest();
 
             var book = _mapper.Map<Book>(bookDto);
-            var bookResult = await _bookService.Add(book);
+            var bookResult = await _bookService.AddAsync(book);
             if (bookResult == null)
                 return BadRequest();
 
@@ -88,7 +88,7 @@ namespace BookStore.API.Controllers
                 return BadRequest();
 
             var book = _mapper.Map<Book>(bookDto);
-            await _bookService.Update(book);
+            await _bookService.UpdateAsync(book);
 
             return Ok(bookDto);
         }
@@ -98,11 +98,11 @@ namespace BookStore.API.Controllers
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public async Task<IActionResult> Remove(int id)
         {
-            var book = await _bookService.GetById(id);
+            var book = await _bookService.GetByIdAsync(id);
             if (book == null)
                 return NotFound();
 
-            await _bookService.Remove(book);
+            await _bookService.RemoveAsync(book);
 
             return Ok();
         }
@@ -113,7 +113,7 @@ namespace BookStore.API.Controllers
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public async Task<ActionResult<List<BookResultDto>>> Search(string bookName)
         {
-            var books = await _bookService.Search(bookName);
+            var books = await _bookService.SearchAsync(bookName);
             if (books == null || !books.Any())
                 return NotFound("None book was founded");
 
@@ -127,7 +127,7 @@ namespace BookStore.API.Controllers
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public async Task<ActionResult<List<BookResultDto>>> SearchBookWithCategory(string searchedValue)
         {
-            var books = await _bookService.SearchBookWithCategory(searchedValue);
+            var books = await _bookService.SearchBookWithCategoryAsync(searchedValue);
             if (books == null || !books.Any())
                 return NotFound("None book was founded");
 

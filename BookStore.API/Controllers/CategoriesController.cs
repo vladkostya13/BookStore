@@ -26,7 +26,7 @@ namespace BookStore.API.Controllers
         [ProducesResponseType((int)HttpStatusCode.OK)]
         public async Task<ActionResult<List<CategoryResultDto>>> GetAll()
         {
-            var categories = await _categoryService.GetAll();
+            var categories = await _categoryService.GetAllAsync();
             var categoriesResultDto = _mapper.Map<IEnumerable<CategoryResultDto>>(categories);
 
             return Ok(categoriesResultDto);
@@ -37,7 +37,7 @@ namespace BookStore.API.Controllers
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public async Task<ActionResult<List<CategoryResultDto>>> GetById(int id)
         {
-            var category = await _categoryService.GetById(id);
+            var category = await _categoryService.GetByIdAsync(id);
             if (category == null)
                 return NotFound();
 
@@ -54,7 +54,7 @@ namespace BookStore.API.Controllers
                 return BadRequest();
 
             var category = _mapper.Map<Category>(categoryDto);
-            var categoryResult = await _categoryService.Add(category);
+            var categoryResult = await _categoryService.AddAsync(category);
             if (categoryResult == null)
                 return BadRequest();
 
@@ -74,7 +74,7 @@ namespace BookStore.API.Controllers
                 return BadRequest();
 
             var category = _mapper.Map<Category>(categoryDto);
-            await _categoryService.Update(category);
+            await _categoryService.UpdateAsync(category);
 
             return Ok(categoryDto);
         }
@@ -85,11 +85,11 @@ namespace BookStore.API.Controllers
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> Remove(int id)
         {
-            var category = await _categoryService.GetById(id);
+            var category = await _categoryService.GetByIdAsync(id);
             if (category == null)
                 return NotFound();
 
-            var result = await _categoryService.Remove(category);
+            var result = await _categoryService.RemoveAsync(category);
             if (!result)
                 return BadRequest();
 
@@ -102,7 +102,7 @@ namespace BookStore.API.Controllers
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public async Task<ActionResult<List<CategoryResultDto>>> Search(string category)
         {
-            var categories = await _categoryService.Search(category);
+            var categories = await _categoryService.SearchAsync(category);
             if (categories == null || !categories.Any())
                 return NotFound("None category was founded");
 

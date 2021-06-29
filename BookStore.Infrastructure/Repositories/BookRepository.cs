@@ -13,22 +13,22 @@ namespace BookStore.Infrastructure.Repositories
     {
         public BookRepository(BookStoreDbContext context) : base(context) { }
 
-        public override async Task<List<Book>> GetAll()
+        public override async Task<List<Book>> GetAllAsync()
         {
             return await _db.Books.AsNoTracking().Include(b => b.Category).OrderBy(b => b.Name).ToListAsync();
         }
 
-        public override async Task<Book> GetById(int id)
+        public override async Task<Book> GetByIdAsync(int id)
         {
             return await _db.Books.AsNoTracking().Include(b => b.Category).Where(b => b.Id == id).FirstOrDefaultAsync();
         }
 
-        public async Task<IEnumerable<Book>> GetBooksByCategory(int categoryId)
+        public async Task<IEnumerable<Book>> GetBooksByCategoryAsync(int categoryId)
         {
             return await Search(x => x.Id == categoryId);
         }
 
-        public async Task<IEnumerable<Book>> SearchBookWithCategory(string searchedValue)
+        public async Task<IEnumerable<Book>> SearchBookWithCategoryAsync(string searchedValue)
         {
             return await _db.Books.AsNoTracking()
                 .Include(b => b.Category)

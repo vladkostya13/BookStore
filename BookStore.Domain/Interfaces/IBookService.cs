@@ -7,13 +7,13 @@ namespace BookStore.Domain.Interfaces
 {
     public interface IBookService : IDisposable
     {
-        Task<IEnumerable<Book>> GetAll();
-        Task<Book> GetById(int id);
-        Task<Book> Add(Book book);
-        Task<Book> Update(Book book);
-        Task<bool> Remove(Book book);
-        Task<IEnumerable<Book>> GetBooksByCategory(int categoryId);
-        Task<IEnumerable<Book>> Search(string bookName);
-        Task<IEnumerable<Book>> SearchBookWithCategory(string searchedValue);
+        Task<IEnumerable<Book>> GetAllAsync();
+        Task<Book> GetByIdAsync(int id);
+        Task<Book> AddAsync(Book book);
+        Task<Book> UpdateAsync(Book book);
+        Task<bool> RemoveAsync(Book book);
+        Task<IEnumerable<Book>> GetBooksByCategoryAsync(int categoryId);
+        Task<IEnumerable<Book>> SearchAsync(string bookName);
+        Task<IEnumerable<Book>> SearchBookWithCategoryAsync(string searchedValue);
     }
 }

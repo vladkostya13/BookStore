@@ -18,7 +18,7 @@ namespace BookStore.Domain.Services
             _bookService = bookService;
         }
 
-        public async Task<Category> Add(Category category)
+        public async Task<Category> AddAsync(Category category)
         {
             var isCategoryExist = (await _categoryRepository.Search(c => c.Name == category.Name)).Any();
             if (isCategoryExist)
@@ -28,15 +28,15 @@ namespace BookStore.Domain.Services
             return category;
         }
 
-        public async Task<Category> Update(Category category)
+        public async Task<Category> UpdateAsync(Category category)
         {
             await _categoryRepository.Update(category);
             return category;
         }
 
-        public async Task<bool> Remove(Category category)
+        public async Task<bool> RemoveAsync(Category category)
         {
-            var isBooksWithCategoryExist = (await _bookService.GetBooksByCategory(category.Id)).Any();
+            var isBooksWithCategoryExist = (await _bookService.GetBooksByCategoryAsync(category.Id)).Any();
             if (isBooksWithCategoryExist)
                 return false;
 
@@ -44,17 +44,17 @@ namespace BookStore.Domain.Services
             return true;
         }
 
-        public async Task<IEnumerable<Category>> GetAll()
+        public async Task<IEnumerable<Category>> GetAllAsync()
         {
-            return await _categoryRepository.GetAll();
+            return await _categoryRepository.GetAllAsync();
         }
 
-        public async Task<Category> GetById(int id)
+        public async Task<Category> GetByIdAsync(int id)
         {
-            return await _categoryRepository.GetById(id);
+            return await _categoryRepository.GetByIdAsync(id);
         }
 
-        public async Task<IEnumerable<Category>> Search(string categoryName)
+        public async Task<IEnumerable<Category>> SearchAsync(string categoryName)
         {
             return await _categoryRepository.Search(x => x.Name.Contains(categoryName, StringComparison.CurrentCultureIgnoreCase));
         }
