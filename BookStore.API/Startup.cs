@@ -1,3 +1,4 @@
+using BookStore.API.Configuration;
 using BookStore.Infrastructure.Context;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -25,6 +26,8 @@ namespace BookStore.API
                 options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"));
             });
 
+            services.AddAutoMapper(typeof(Startup));
+            services.ResolveDependencies();
             services.AddControllers();
         }
 
