@@ -4,6 +4,7 @@ using BookStore.Domain.Interfaces;
 using BookStore.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -22,7 +23,8 @@ namespace BookStore.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        public async Task<ActionResult<List<CategoryResultDto>>> GetAll()
         {
             var categories = await _categoryService.GetAll();
             var categoriesResultDto = _mapper.Map<IEnumerable<CategoryResultDto>>(categories);
@@ -33,7 +35,7 @@ namespace BookStore.API.Controllers
         [HttpGet("{id:int}")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
-        public async Task<IActionResult> GetById(int id)
+        public async Task<ActionResult<List<CategoryResultDto>>> GetById(int id)
         {
             var category = await _categoryService.GetById(id);
             if (category == null)
@@ -44,8 +46,9 @@ namespace BookStore.API.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        public async Task<IActionResult> Add(CategoryAddDto categoryDto)
+        public async Task<ActionResult<List<CategoryResultDto>>> Add(CategoryAddDto categoryDto)
         {
             if (!ModelState.IsValid)
                 return BadRequest();
@@ -60,8 +63,9 @@ namespace BookStore.API.Controllers
         }
 
         [HttpPut("{id:int}")]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        public async Task<IActionResult> Update(int id, CategoryEditDto categoryDto)
+        public async Task<ActionResult<List<CategoryEditDto>>> Update(int id, CategoryEditDto categoryDto)
         {
             if (id != categoryDto.Id)
                 return BadRequest();
@@ -76,6 +80,7 @@ namespace BookStore.API.Controllers
         }
 
         [HttpDelete("{id:int}")]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> Remove(int id)
@@ -93,15 +98,16 @@ namespace BookStore.API.Controllers
 
         [HttpGet]
         [Route("search/{category}")]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
-        public async Task<ActionResult<List<Category>>> Search(string category)
+        public async Task<ActionResult<List<CategoryResultDto>>> Search(string category)
         {
             var categories = await _categoryService.Search(category);
-            var categoriesResultDto = _mapper.Map<List<CategoryResultDto>>(categories);
-            if (categoriesResultDto == null || categoriesResultDto.Count == 0)
+            if (categories == null || !categories.Any())
                 return NotFound("None category was founded");
 
-            return Ok(categories);
+            var categoriesResultDto = _mapper.Map<List<CategoryResultDto>>(categories);
+            return Ok(categoriesResultDto);
         }
     }
 }

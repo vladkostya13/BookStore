@@ -28,10 +28,6 @@ namespace BookStore.Domain.Services
 
         public async Task<Book> Update(Book book)
         {
-            var isInvalidId = (await _bookRepository.Search(b => b.Name == book.Name && b.Id != book.Id)).Any();
-            if (isInvalidId)
-                return null;
-
             await _bookRepository.Update(book);
             return book;
         }
