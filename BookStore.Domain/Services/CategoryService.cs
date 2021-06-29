@@ -30,10 +30,6 @@ namespace BookStore.Domain.Services
 
         public async Task<Category> Update(Category category)
         {
-            var isInvalidId = (await _categoryRepository.Search(c => c.Name == category.Name && c.Id != category.Id)).Any();
-            if (isInvalidId)
-                return null;
-
             await _categoryRepository.Update(category);
             return category;
         }
