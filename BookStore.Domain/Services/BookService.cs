@@ -18,23 +18,23 @@ namespace BookStore.Domain.Services
 
         public async Task<Book> AddAsync(Book book)
         {
-            var isBookExist = (await _bookRepository.Search(b => b.Name == book.Name)).Any();
+            var isBookExist = (await _bookRepository.SearchAsync(b => b.Name == book.Name)).Any();
             if (isBookExist)
                 return null;
 
-            await _bookRepository.Add(book);
+            await _bookRepository.AddAsync(book);
             return book;
         }
 
         public async Task<Book> UpdateAsync(Book book)
         {
-            await _bookRepository.Update(book);
+            await _bookRepository.UpdateAsync(book);
             return book;
         }
 
         public async Task<bool> RemoveAsync(Book book)
         {
-            await _bookRepository.Remove(book);
+            await _bookRepository.RemoveAsync(book);
             return true;
         }
 
@@ -55,7 +55,7 @@ namespace BookStore.Domain.Services
 
         public async Task<IEnumerable<Book>> SearchAsync(string bookName)
         {
-            return await _bookRepository.Search(b => b.Name.Contains(bookName, StringComparison.CurrentCultureIgnoreCase));
+            return await _bookRepository.SearchAsync(b => b.Name.Contains(bookName, StringComparison.CurrentCultureIgnoreCase));
         }
 
         public async Task<IEnumerable<Book>> SearchBookWithCategoryAsync(string searchedValue)

@@ -25,7 +25,7 @@ namespace BookStore.Infrastructure.Repositories
 
         public async Task<IEnumerable<Book>> GetBooksByCategoryAsync(int categoryId)
         {
-            return await Search(x => x.Id == categoryId);
+            return await SearchAsync(x => x.Id == categoryId);
         }
 
         public async Task<IEnumerable<Book>> SearchBookWithCategoryAsync(string searchedValue)

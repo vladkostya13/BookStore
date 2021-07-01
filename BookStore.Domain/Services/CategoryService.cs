@@ -20,17 +20,21 @@ namespace BookStore.Domain.Services
 
         public async Task<Category> AddAsync(Category category)
         {
-            var isCategoryExist = (await _categoryRepository.Search(c => c.Name == category.Name)).Any();
+            var isCategoryExist = (await _categoryRepository.SearchAsync(c => c.Name == category.Name)).Any();
             if (isCategoryExist)
                 return null;
 
-            await _categoryRepository.Add(category);
+            await _categoryRepository.AddAsync(category);
             return category;
         }
 
         public async Task<Category> UpdateAsync(Category category)
         {
-            await _categoryRepository.Update(category);
+            var isCategoryExist = (await _categoryRepository.SearchAsync(c => c.Name == category.Name && c.Id != category.Id)).Any();
+            if (isCategoryExist)
+                return null;
+
+            await _categoryRepository.UpdateAsync(category);
             return category;
         }
 
@@ -40,7 +44,7 @@ namespace BookStore.Domain.Services
             if (isBooksWithCategoryExist)
                 return false;
 
-            await _categoryRepository.Remove(category);
+            await _categoryRepository.RemoveAsync(category);
             return true;
         }
 
@@ -56,7 +60,7 @@ namespace BookStore.Domain.Services
 
         public async Task<IEnumerable<Category>> SearchAsync(string categoryName)
         {
-            return await _categoryRepository.Search(x => x.Name.Contains(categoryName, StringComparison.CurrentCultureIgnoreCase));
+            return await _categoryRepository.SearchAsync(x => x.Name.Contains(categoryName, StringComparison.CurrentCultureIgnoreCase));
         }
 
         public void Dispose()

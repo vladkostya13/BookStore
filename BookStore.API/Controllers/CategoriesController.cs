@@ -74,7 +74,9 @@ namespace BookStore.API.Controllers
                 return BadRequest();
 
             var category = _mapper.Map<Category>(categoryDto);
-            await _categoryService.UpdateAsync(category);
+            var categoryResult = await _categoryService.UpdateAsync(category);
+            if (categoryResult == null)
+                return BadRequest();
 
             return Ok(categoryDto);
         }
