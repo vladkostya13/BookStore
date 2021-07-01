@@ -28,6 +28,10 @@ namespace BookStore.Domain.Services
 
         public async Task<Book> UpdateAsync(Book book)
         {
+            var isBookExist = (await _bookRepository.SearchAsync(b => b.Name == book.Name && b.Id != book.Id)).Any();
+            if (isBookExist)
+                return null;
+
             await _bookRepository.UpdateAsync(book);
             return book;
         }
