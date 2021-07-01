@@ -2,6 +2,7 @@
 using BookStore.Domain.Services;
 using BookStore.Infrastructure.Context;
 using BookStore.Infrastructure.Repositories;
+using LoggerService;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace BookStore.API.Configuration
@@ -17,6 +18,8 @@ namespace BookStore.API.Configuration
 
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IBookService, BookService>();
+
+            services.AddScoped<ILoggerManager, LoggerManager>();
 
             return services;
         }
