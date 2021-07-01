@@ -283,7 +283,7 @@ namespace BookStore.UnitTests.Domain
             var searchedCategory = CreateCategory();
             var categoryName = searchedCategory.Name;
 
-            _categoryRepositoryMock.Setup(c => 
+            _categoryRepositoryMock.Setup(c =>
                 c.SearchAsync(c => c.Name.Contains(categoryName, StringComparison.CurrentCultureIgnoreCase)))
                 .ReturnsAsync((IEnumerable<Category>)(null));
 
@@ -299,7 +299,7 @@ namespace BookStore.UnitTests.Domain
             var searchedCategory = CreateCategory();
             var categoryName = searchedCategory.Name;
 
-            _categoryRepositoryMock.Setup(c => 
+            _categoryRepositoryMock.Setup(c =>
                 c.SearchAsync(c => c.Name.Contains(categoryName, StringComparison.CurrentCultureIgnoreCase)))
                 .ReturnsAsync(categoryList);
 
