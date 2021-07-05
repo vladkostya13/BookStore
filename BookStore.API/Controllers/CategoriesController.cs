@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace BookStore.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/categories")]
     public class CategoriesController : BaseController
     {
         private readonly ICategoryService _categoryService;
