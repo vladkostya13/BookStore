@@ -24,6 +24,7 @@ namespace BookStore.API.Controllers
 
         [HttpGet]
         [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
         public async Task<ActionResult<List<BookResultDto>>> GetAll()
         {
             var books = await _bookService.GetAllAsync();
@@ -35,6 +36,7 @@ namespace BookStore.API.Controllers
         [HttpGet("{id:int}")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
         public async Task<ActionResult<BookResultDto>> GetById(int id)
         {
             var book = await _bookService.GetByIdAsync(id);
@@ -49,6 +51,7 @@ namespace BookStore.API.Controllers
         [Route("get-books-by-category/{categoryId:int}")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
         public async Task<ActionResult<BookResultDto>> GetBooksByCategory(int categoryId)
         {
             var books = await _bookService.GetBooksByCategoryAsync(categoryId);
@@ -62,6 +65,7 @@ namespace BookStore.API.Controllers
         [HttpPost]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
         public async Task<ActionResult<BookResultDto>> Add(BookAddDto bookDto)
         {
             if (!ModelState.IsValid)
@@ -79,6 +83,7 @@ namespace BookStore.API.Controllers
         [HttpPut("{id:int}")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
         public async Task<ActionResult<BookEditDto>> Update(int id, BookEditDto bookDto)
         {
             if (id != bookDto.Id)
@@ -96,6 +101,7 @@ namespace BookStore.API.Controllers
         [HttpDelete("{id:int}")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
         public async Task<IActionResult> Remove(int id)
         {
             var book = await _bookService.GetByIdAsync(id);
@@ -111,6 +117,7 @@ namespace BookStore.API.Controllers
         [Route("search/{bookName}")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
         public async Task<ActionResult<List<BookResultDto>>> Search(string bookName)
         {
             var books = await _bookService.SearchAsync(bookName);
@@ -125,6 +132,7 @@ namespace BookStore.API.Controllers
         [Route("search-book-with-category/{searchedValue}")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
         public async Task<ActionResult<List<BookResultDto>>> SearchBookWithCategory(string searchedValue)
         {
             var books = await _bookService.SearchBookWithCategoryAsync(searchedValue);

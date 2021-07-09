@@ -9,8 +9,9 @@ using System.Threading.Tasks;
 
 namespace BookStore.API.Controllers
 {
+    [ApiController]
     [Route("api/authentication")]
-    public class AuthenticationController : BaseController
+    public class AuthenticationController : ControllerBase
     {
         private readonly IMapper _mapper;
         private readonly UserManager<User> _userManager;

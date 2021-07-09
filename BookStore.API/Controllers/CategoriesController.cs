@@ -24,6 +24,7 @@ namespace BookStore.API.Controllers
 
         [HttpGet]
         [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
         public async Task<ActionResult<List<CategoryResultDto>>> GetAll()
         {
             var categories = await _categoryService.GetAllAsync();
@@ -35,6 +36,7 @@ namespace BookStore.API.Controllers
         [HttpGet("{id:int}")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
         public async Task<ActionResult<List<CategoryResultDto>>> GetById(int id)
         {
             var category = await _categoryService.GetByIdAsync(id);
@@ -48,6 +50,7 @@ namespace BookStore.API.Controllers
         [HttpPost]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
         public async Task<ActionResult<List<CategoryResultDto>>> Add(CategoryAddDto categoryDto)
         {
             if (!ModelState.IsValid)
@@ -65,6 +68,7 @@ namespace BookStore.API.Controllers
         [HttpPut("{id:int}")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
         public async Task<ActionResult<List<CategoryEditDto>>> Update(int id, CategoryEditDto categoryDto)
         {
             if (id != categoryDto.Id)
@@ -85,6 +89,7 @@ namespace BookStore.API.Controllers
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
         public async Task<IActionResult> Remove(int id)
         {
             var category = await _categoryService.GetByIdAsync(id);
@@ -102,6 +107,7 @@ namespace BookStore.API.Controllers
         [Route("search/{category}")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
         public async Task<ActionResult<List<CategoryResultDto>>> Search(string category)
         {
             var categories = await _categoryService.SearchAsync(category);
