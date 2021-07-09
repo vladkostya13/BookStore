@@ -1,4 +1,6 @@
-﻿using BookStore.Domain.Interfaces;
+﻿using BookStore.API.Managers.Implementations;
+using BookStore.API.Managers.Interfaces;
+using BookStore.Domain.Interfaces;
 using BookStore.Domain.Models;
 using BookStore.Domain.Services;
 using BookStore.Infrastructure.Context;
@@ -26,6 +28,7 @@ namespace BookStore.API.Configuration
             services.AddScoped<IBookService, BookService>();
 
             services.AddScoped<ILoggerManager, LoggerManager>();
+            services.AddScoped<IAuthenticationManager, AuthenticationManager>();
 
             return services;
         }
@@ -42,7 +45,7 @@ namespace BookStore.API.Configuration
                 u.User.RequireUniqueEmail = true;
             });
 
-            builder = new IdentityBuilder(builder.UserType, typeof(IdentityRole), builder.Services);
+            builder.AddRoles<IdentityRole>();
             builder.AddEntityFrameworkStores<BookStoreDbContext>().AddDefaultTokenProviders();
         }
 
