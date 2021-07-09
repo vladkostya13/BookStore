@@ -44,7 +44,6 @@ namespace BookStore.API
             services.AddAutoMapper(typeof(Startup));
             services.ResolveDependencies();
 
-            services.AddAuthentication();
             services.ConfigureIdentity();
             services.ConfigureJWT(Configuration);
         }
